@@ -28,15 +28,19 @@
 OUTDIR=$1
 
 
-for i in jvms sar iostat vmstat perftool
-do
-	killall -SIGTERM -e $i 
-done
-
 if [ "$1" = "f" ]; then
+	for i in jvms sar iostat vmstat perftool awk
+	do
+		killall -SIGKILL -g -e $i 
+	done
 	rm -rf tmp;
 	exit
 fi
+
+	for i in jvms sar iostat vmstat perftool awk
+	do
+		killall -SIGTERM -g -e $i 
+	done
 
 ./postperf $OUTDIR
 
